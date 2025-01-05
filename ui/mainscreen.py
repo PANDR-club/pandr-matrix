@@ -1,5 +1,14 @@
 import tkinter as tk
 from tkinter import ttk
+import subprocess, signal
+
+
+def runSubprocess(args):
+    global matrixProc
+
+    matrixProc = subprocess.Popen(args)
+
+matrixProc = None
 
 window = tk.Tk()
 window.title('Matrix Control Panel')
@@ -17,11 +26,19 @@ notebook.pack(expand=True, fill='both') # Expand fills space not otherwise used,
 
 announcementVar=tk.StringVar()
 def submit():
+    global matrixProc
+
     announcement=announcementVar.get()
     #("    ANNOUNCEMENT    " + announcement + "    ANNOUNCEMENT    ")
+
     screenPrev.config(text=announcement)
     announcementVar.set("")
-    
+
+    if matrixProc:
+        matrixProc.send_signal(signal.SIGINT) # This is extremely poor practice, and should be fixed
+
+    runSubprocess(['sudo', 'python', '-m', 'matrix.matrix', '-t', announcement, '-x', str(64-len(announcement)*5), '-y', str(32+6)])
+
 announcementEntry = tk.Entry(mainTab,
                              textvariable = announcementVar,
                              font=('DejaVu Sans',10,'normal'))
@@ -43,4 +60,8 @@ exitBtn = tk.Button(mainTab,
                     width=20)
 exitBtn.place(x=492, y=710)
 
-window.mainloop()
+# Not sure if this will work
+try:
+    window.mainloop()
+except KeyboardInterrupt:
+    matrix.rgbMatrix.Clear()

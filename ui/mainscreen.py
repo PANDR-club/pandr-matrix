@@ -8,6 +8,14 @@ def runSubprocess(args):
 
     matrixProc = subprocess.Popen(args)
 
+def exitProg():
+    global matrixProc
+
+    window.quit()
+
+    if matrixProc:
+        matrixProc.send_signal(signal.SIGINT) # This is extremely poor practice, and should be fixed
+
 matrixProc = None
 
 window = tk.Tk()
@@ -56,7 +64,7 @@ exitBtn = tk.Button(mainTab,
                     fg="white",
                     activebackground="white",
                     activeforeground="red",
-                    command=window.quit,
+                    command=exitProg,
                     width=20)
 exitBtn.place(x=492, y=710)
 

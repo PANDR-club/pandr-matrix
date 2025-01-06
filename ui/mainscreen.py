@@ -37,7 +37,7 @@ def submit():
     if matrixProc:
         matrixProc.send_signal(signal.SIGINT) # This is extremely poor practice, and should be fixed
 
-    runSubprocess(['sudo', 'python', '-m', 'matrix.matrix', '-t', announcement, '-x', str(64-len(announcement)*5), '-y', str(32+6)])
+    runSubprocess(['sudo', 'python', '-m', 'matrix.utils.dispText', '-t', announcement, '-x', str(64-len(announcement)*5), '-y', str(32+6)])
 
 announcementEntry = tk.Entry(mainTab,
                              textvariable = announcementVar,
@@ -60,8 +60,4 @@ exitBtn = tk.Button(mainTab,
                     width=20)
 exitBtn.place(x=492, y=710)
 
-# Not sure if this will work
-try:
-    window.mainloop()
-except KeyboardInterrupt:
-    matrix.rgbMatrix.Clear()
+window.mainloop()

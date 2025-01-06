@@ -1,6 +1,7 @@
 import time, argparse
-from rgbmatrix import RGBMatrix, RGBMatrixOptions, graphics
+from rgbmatrix import RGBMatrix, RGBMatrixOptions
 from matrix import consts
+from matrix.utils import dispText
 
 # Flags
 parser = argparse.ArgumentParser()
@@ -23,15 +24,6 @@ options.pwm_bits = 11
 rgbMatrix = RGBMatrix(options=options)
 canvas = rgbMatrix.CreateFrameCanvas()
 
-
-# Displays given text to the matrix
-def dispText(text, posx, posy, colour, font=consts.largeFont):
-    global canvas
-
-    canvas.Clear()
-    graphics.DrawText(canvas, font, posx, posy, colour, text)
-    canvas = rgbMatrix.SwapOnVSync(canvas)
-
 def displayCurrentTime():
     global canvas
 
@@ -42,12 +34,3 @@ def displayCurrentTime():
         currentText = time.strftime("%H:%M:%S", time.gmtime())
         dispText(currentText, 64-len(currentText)*5, 32+6, text_color)
         canvas = rgbMatrix.SwapOnVSync(canvas)
-
-# displayCurrentTime()
-
-try:
-    while True:
-        dispText(args.text, int(args.posX), int(args.posY), consts.RED)
-
-except KeyboardInterrupt:
-    rgbMatrix.Clear()

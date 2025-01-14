@@ -28,6 +28,6 @@ exitBtn = tk.Button(mainTab,
                     activeforeground="red",
                     command=window.quit,
                     width=20)
-exitBtn.place(x=560, y=710)
+exitBtn.place(x=492, y=710)
 
 window.mainloop()

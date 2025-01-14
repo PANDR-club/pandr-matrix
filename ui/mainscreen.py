@@ -25,12 +25,17 @@ window.minsize(width=1280, height=800)
 
 notebook = ttk.Notebook(window) # Manages a collection of windows/displays
 
+style = ttk.Style()
+style.theme_use('default')
+
+style.configure("TNotebook.Tab", padding=[10, 20])
+
 mainTab = tk.Frame(notebook)
 baseNTab = tk.Frame(notebook)
 
 notebook.add(mainTab, text='Home')
 notebook.add(baseNTab, text='BaseN')
-notebook.pack(expand=True, fill='both') # Expand fills space not otherwise used, fill will fill space on x and y axis
+notebook.pack(expand=True, fill='both')
 
 announcementVar=tk.StringVar()
 def submit():

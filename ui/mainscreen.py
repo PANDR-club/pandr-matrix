@@ -1,12 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from utils.bin_dec_hex_tools import randBin
-
-def displaybin():
-    bindisplay.config(text=f"{randBin()} \n{randBin()} \n{randBin()} \n{randBin()} \n{randBin()} ", font=("Arial", 20))
-    
-def displayhex():
-    pass
+from utils.bin_dec_hex_tools import randBin, randHex, randDec
 
 window = tk.Tk()
 window.title('Matrix Control Panel')
@@ -24,15 +18,28 @@ notebook.pack(expand=True, fill='both') # Expand fills space not otherwise used,
 exitBtn = tk.Button(mainTab, text='Exit', command=window.quit, width=20)
 exitBtn.pack()
 
-#Binary Gen
-binaryBtn = tk.Button(baseNTab, text='Binary', command=displaybin, width=30, height=5).pack(side="top")
+options_list = ["Binary", "Hexadecimal", "Decimal"]
+valueofchoice = tk.StringVar(baseNTab)
+valueofchoice.set("Select an Option")
 
-#Hexadecimal Gen
-hexBtn = tk.Button(baseNTab, text='Hexadecimal', command=displayhex, width=30, height=5).pack(side="left")
+question_menu = tk.OptionMenu(baseNTab, valueofchoice, *options_list) 
+question_menu.pack()
+
+def print_answers():
+    displaychoice = valueofchoice.get()
+    if displaychoice == "Binary":
+        return questiondisplay.config(text=f"{randBin()} \n{randBin()} \n{randBin()} \n{randBin()} ", font=("Arial", 20))
+    elif displaychoice == "Hexadecimal":
+        return questiondisplay.config(text=f"{randHex()} \n{randHex()} \n{randHex()} \n{randHex()} ", font=("Arial", 20))
+    elif displaychoice == "Decimal":
+        return questiondisplay.config(text=f"{randDec()} \n{randDec()} \n{randDec()} \n{randDec()} ", font=("Arial", 20))
+
+submit_button = tk.Button(baseNTab, text='Submit', command=print_answers) 
+submit_button.pack()
 
 #Binary Display
-bindisplay = tk.Label(baseNTab)
-bindisplay.pack()
+questiondisplay = tk.Label(baseNTab)
+questiondisplay.pack()
 
 window.mainloop()
 

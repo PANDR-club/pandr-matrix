@@ -28,11 +28,11 @@ question_menu.pack()
 def print_answers():
     displaychoice = valueofchoice.get()
     if displaychoice == "Binary":
-        return questiondisplay.config(text=f"{randBin()} \n{randBin()} \n{randBin()} \n{randBin()} ", font=("Arial", 20))
+        return questiondisplay.config(text=f"{randBin()} ", font=("Arial", 20))
     elif displaychoice == "Hexadecimal":
-        return questiondisplay.config(text=f"{randHex()} \n{randHex()} \n{randHex()} \n{randHex()} ", font=("Arial", 20))
+        return questiondisplay.config(text=f"{randHex()} ", font=("Arial", 20))
     elif displaychoice == "Decimal":
-        return questiondisplay.config(text=f"{randDec()} \n{randDec()} \n{randDec()} \n{randDec()} ", font=("Arial", 20))
+        return questiondisplay.config(text=f"{randDec()} ", font=("Arial", 20))
 
 submit_button = tk.Button(baseNTab, text='Submit', command=print_answers) 
 submit_button.pack()
@@ -42,4 +42,6 @@ questiondisplay = tk.Label(baseNTab)
 questiondisplay.pack()
 
 window.mainloop()
+
+
 

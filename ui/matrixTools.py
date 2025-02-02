@@ -1,5 +1,4 @@
 import subprocess, signal
-import time
 
 matrixProc = subprocess.Popen(['sudo', 'python3', '-m', 'matrix.matrixControl'], # The matrix process
                               stdin=subprocess.PIPE,

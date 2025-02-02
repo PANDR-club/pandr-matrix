@@ -34,8 +34,6 @@ def submit():
     screenPrev.config(text=announcement)
     announcementVar.set("")
 
-    matrixTools.dispClock()
-
 
 announcementEntry = tk.Entry(mainTab,
                              textvariable = announcementVar,

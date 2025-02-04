@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+from utils.bin_dec_hex_tools import randBin, randHex, randDec
 import subprocess, signal
 
 
@@ -62,6 +63,7 @@ announcementEntry.pack()
 subBtn.pack()
 screenPrev.pack()
 
+notebook.pack(expand=True, fill='both') # Expand fills space not otherwise used, fill will fill space on x and y axis
 
 exitBtn = tk.Button(mainTab,
                     text='Exit',
@@ -72,5 +74,28 @@ exitBtn = tk.Button(mainTab,
                     command=exitProg,
                     width=20)
 exitBtn.place(x=492, y=710)
+
+options_list = ["Binary", "Hexadecimal", "Decimal"]
+valueofchoice = tk.StringVar(baseNTab)
+valueofchoice.set("Select an Option")
+
+question_menu = tk.OptionMenu(baseNTab, valueofchoice, *options_list) 
+question_menu.pack()
+
+def print_answers():
+    displaychoice = valueofchoice.get()
+    if displaychoice == "Binary":
+        return questiondisplay.config(text=f"{randBin()}", font=("Arial", 20))
+    elif displaychoice == "Hexadecimal":
+        return questiondisplay.config(text=f"{randHex()}", font=("Arial", 20))
+    elif displaychoice == "Decimal":
+        return questiondisplay.config(text=f"{randDec()}", font=("Arial", 20))
+
+submit_button = tk.Button(baseNTab, text='Submit', command=print_answers) 
+submit_button.pack()
+
+#Binary Display
+questiondisplay = tk.Label(baseNTab)
+questiondisplay.pack()
 
 window.mainloop()

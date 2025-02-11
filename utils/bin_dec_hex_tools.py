@@ -5,6 +5,7 @@
 # between two values could be hard and time consuming to code. In such a case, we can use somebody 
 # else's code (the 'randint' function) to serve our purpose. Examples on when we might do this is 
 # for generating random things and handling time.
+from random import choice
 from random import randint
 
 # hexChars is a list of all the hex characters in order
@@ -89,3 +90,8 @@ def binToDec(binStr):
         if comparisonNum < 1:
             break
     return total
+
+names = ['james', 'jack', 'john']
+def rand_name(names):
+    print(choice(names))
+

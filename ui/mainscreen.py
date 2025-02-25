@@ -1,10 +1,11 @@
-from ui import matrixTools
+#from ui import matrixTools
 from utils.bin_dec_hex_tools import randBin, randDec, randHex
 import tkinter as tk
 from tkinter import ttk
+import os
 
 def exitProg():
-    matrixTools.quitMatrix()
+#    matrixTools.quitMatrix()
     window.quit()
 
 window = tk.Tk()
@@ -21,9 +22,11 @@ style.configure("TNotebook.Tab", padding=[10, 20])
 
 mainTab = tk.Frame(notebook)
 baseNTab = tk.Frame(notebook)
+classTab = tk.Frame(notebook)
 
 notebook.add(mainTab, text='Home')
 notebook.add(baseNTab, text='BaseN')
+notebook.add(classTab, text='Class')
 notebook.pack(expand=True, fill='both')
 
 announcementVar=tk.StringVar()
@@ -57,15 +60,16 @@ exitBtn = tk.Button(mainTab,
                     width=20)
 exitBtn.place(x=492, y=710)
 
+#----- Hex, Dec, Bin generator 
 options_list = ["Binary", "Hexadecimal", "Decimal"]
-valueofchoice = tk.StringVar(baseNTab)
-valueofchoice.set("Select an Option")
+basenchoice = tk.StringVar(baseNTab)
+basenchoice.set("Select an Option")
 
-question_menu = tk.OptionMenu(baseNTab, valueofchoice, *options_list) 
+question_menu = tk.OptionMenu(baseNTab, basenchoice, *options_list) 
 question_menu.pack()
 
 def print_answers():
-    displaychoice = valueofchoice.get()
+    displaychoice = basenchoice.get()
     if displaychoice == "Binary":
         return questiondisplay.config(text=f"{randBin()}", font=("Arial", 20))
     elif displaychoice == "Hexadecimal":
@@ -75,6 +79,38 @@ def print_answers():
 
 submit_button = tk.Button(baseNTab, text='Submit', command=print_answers) 
 submit_button.pack()
+#------
+
+#------ Class editor
+ClassOptions = os.listdir("Classes/")
+name_var = tk.StringVar(classTab)
+class_var = tk.StringVar(classTab)
+Classchoice = tk.StringVar(classTab)
+Classchoice.set("Choose a Class")
+
+ClassMenu = tk.OptionMenu(classTab, Classchoice, *ClassOptions)
+ClassMenu.pack()
+
+def addnametoaclass():
+    name = name_var.get()
+    with open('f{class_var.get()}', 'a') as file:
+        file.write(name)
+
+def addnewclass():
+    schoolclass = class_var.get()
+    print(schoolclass)
+    newclass = open(f"Classes//{schoolclass}.txt", "x")
+    
+classInput = tk.Entry(classTab, textvariable=class_var)
+classInput.pack()
+addClass_button = tk.Button(classTab, text='Add Class', command=addnewclass)
+addClass_button.pack()
+nameInput = tk.Entry(classTab, textvariable=name_var)
+nameInput.pack()
+addName_button = tk.Button(classTab, text='Add Name', command=addnametoaclass)
+addName_button.pack()
+
+
 
 #Binary Display
 questiondisplay = tk.Label(baseNTab)

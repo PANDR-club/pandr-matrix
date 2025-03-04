@@ -55,7 +55,7 @@ exitBtn = tk.Button(mainTab,
                     activeforeground="red",
                     command=exitProg,
                     width=20)
-exitBtn.place(x=492, y=710)
+exitBtn.pack(side="bottom")
 
 options_list = ["Binary", "Hexadecimal", "Decimal"]
 valueofchoice = tk.StringVar(baseNTab)

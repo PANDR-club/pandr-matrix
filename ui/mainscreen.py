@@ -7,7 +7,7 @@ import tkinter.font as tkFont
 
 
 def exitProg():
-    #matrixTools.quitMatrix()
+    matrixTools.quitMatrix()
     window.quit()
 
 window = tk.Tk()

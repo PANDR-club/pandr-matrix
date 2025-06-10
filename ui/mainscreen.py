@@ -1,4 +1,4 @@
-#from ui import matrixTools
+from ui import matrixTools
 from utils.bin_dec_hex_tools import randBin, randDec, randHex
 import tkinter as tk
 from tkinter import ttk
@@ -101,3 +101,22 @@ submit_button.grid(column=1, row=1, sticky = tk.W+tk.E)
 baseNTab.grid_columnconfigure((0, 1), weight=1)
 
 window.mainloop()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#graffiti - Riv

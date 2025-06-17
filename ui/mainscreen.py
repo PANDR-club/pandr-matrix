@@ -72,22 +72,22 @@ options_list = ["Binary", "Hexadecimal", "Decimal"]
 valueofchoice = tk.StringVar(baseNTab)
 valueofchoice.set("Select an Option")
 
-mono = tkFont.Font(family='Monospace', size=36)
+monospace = tkFont.Font(family='Monospace', size=36)
 
 question_menu = tk.OptionMenu(baseNTab, valueofchoice, *options_list) 
 
 question_menu.config(height=4, font=(40))
 dropdown = window.nametowidget(question_menu.menuname)
-dropdown.config(font=mono)
+dropdown.config(font=monospace)
 
 def print_answers():
     displaychoice = valueofchoice.get()
     if displaychoice == "Binary":
-        return questiondisplay.config(text=f"{randBin()}", font=mono)
+        return questiondisplay.config(text=f"{randBin()}", font=monospace)
     elif displaychoice == "Hexadecimal":
-        return questiondisplay.config(text=f"{randHex()}", font=mono)
+        return questiondisplay.config(text=f"{randHex()}", font=monospace)
     elif displaychoice == "Decimal":
-        return questiondisplay.config(text=f"{randDec()}", font=mono)
+        return questiondisplay.config(text=f"{randDec()}", font=monospace)
 
 submit_button = tk.Button(baseNTab, text='Submit', command=print_answers, font=(40), height=4) 
 

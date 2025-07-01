@@ -109,6 +109,15 @@ def addnewclass():
     newclass = open(f"Classes//{schoolclass}.txt", "x")
     newclass.close()
 
+    Classchoice.set('Choose a Class')
+    ClassMenu['menu'].delete(0, 'end')
+    ClassOptions = os.listdir("Classes/")
+
+    for classOption in ClassOptions:
+        ClassMenu['menu'].add_command(label=classOption, command=tk._setit(Classchoice, classOption))
+
+
+
 def deleteclass():
     pass
 

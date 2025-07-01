@@ -94,7 +94,6 @@ else:
         ClassOptions[i] = ClassOptions[i][:-4]
     ClassMenu = tk.OptionMenu(classTab, Classchoice, *ClassOptions)
     ClassMenu.pack()
-
     
 name_var = tk.StringVar(classTab)
 class_var = tk.StringVar(classTab)
@@ -102,30 +101,33 @@ class_var = tk.StringVar(classTab)
 def addnametoaclass():
     name = name_var.get()
     chosenclass = Classchoice.get()
-    with open(f'Classes//{chosenclass}', 'a') as file:
+    with open(f'Classes//{chosenclass}.txt', 'a') as file:
         file.write(f'{name}\n')
 
 def addnewclass():
     schoolclass = class_var.get()
     newclass = open(f"Classes//{schoolclass}.txt", "x")
     newclass.close()
-    ClassOptions = os.listdir("Classes/")
-    for i in range(len(ClassOptions)):
-        ClassOptions[i] = ClassOptions[i][:-4]
-    selected_option = tk.StringVar(value=ClassOptions[0])
-    ClassMenu['menu'].delete(0, 'end')
-    for option in ClassOptions:
-        ClassMenu['menu'].add_command(label=option, command=tk._setit(selected_option, option))
+
+def deleteclass():
+    pass
+
+def test():
+    print(Classchoice.get())
 
 classInput = tk.Entry(classTab, textvariable=class_var)
 classInput.pack()
 addClass_button = tk.Button(classTab, text='Add Class', command=addnewclass)
 addClass_button.pack()
+deleteClass_button = tk.Button(classTab, text='Delete Class', command=deleteclass)
+deleteClass_button.pack()
 nameInput = tk.Entry(classTab, textvariable=name_var)
 nameInput.pack()
 addName_button = tk.Button(classTab, text='Add Name', command=addnametoaclass)
 addName_button.pack()
 
+testChoiceMenu = tk.Button(classTab, text='Test', command=test)
+testChoiceMenu.pack()
 
 questiondisplay = tk.Label(baseNTab)
 questiondisplay.pack()

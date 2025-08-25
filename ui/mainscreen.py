@@ -2,6 +2,9 @@ from ui import matrixTools
 from utils.bin_dec_hex_tools import randBin, randDec, randHex
 import tkinter as tk
 from tkinter import ttk
+import tkinter.font as tkFont
+
+
 
 def exitProg():
     matrixTools.quitMatrix()
@@ -10,7 +13,7 @@ def exitProg():
 window = tk.Tk()
 window.title('Matrix Control Panel')
 window.minsize(width=1280, height=800)
-# window.attributes("-fullscreen", True) # Uncomment this for when running on the Pi
+#window.attributes("-fullscreen", True) # Uncomment this for when running on the Pi
 
 notebook = ttk.Notebook(window) # Manages a collection of windows/displays
 
@@ -38,8 +41,14 @@ def submit():
 
 announcementEntry = tk.Entry(mainTab,
                              textvariable = announcementVar,
-                             font=('DejaVu Sans',10,'normal'))
-subBtn=tk.Button(mainTab,text = 'Submit', command = submit)
+                             font=('DejaVu Sans',20,'normal'),
+                             width=35,)
+subBtn=tk.Button(mainTab,
+                 text = 'Submit',
+                 command = submit,
+                 font=(16),
+                 width=20,
+                 height=2)
 screenPrev = tk.Label(mainTab)
 
 announcementEntry.pack()
@@ -55,30 +64,64 @@ exitBtn = tk.Button(mainTab,
                     activebackground="white",
                     activeforeground="red",
                     command=exitProg,
-                    width=20)
-exitBtn.place(x=492, y=710)
+                    font=(20),
+                    width=35,
+                    height=2)
+exitBtn.pack(side="bottom")
 
 options_list = ["Binary", "Hexadecimal", "Decimal"]
 valueofchoice = tk.StringVar(baseNTab)
 valueofchoice.set("Select an Option")
 
+monospace = tkFont.Font(family='Monospace', size=36)
+
 question_menu = tk.OptionMenu(baseNTab, valueofchoice, *options_list)
 question_menu.pack()
+question_menu = tk.OptionMenu(baseNTab, valueofchoice, *options_list)
+
+question_menu.config(height=4, font=(40))
+dropdown = window.nametowidget(question_menu.menuname)
+dropdown.config(font=monospace)
 
 def print_answers():
     displaychoice = valueofchoice.get()
     if displaychoice == "Binary":
-        return questiondisplay.config(text=f"{randBin()}", font=("Arial", 20))
+        return questiondisplay.config(text=f"{randBin()}", font=monospace)
     elif displaychoice == "Hexadecimal":
-        return questiondisplay.config(text=f"{randHex()}", font=("Arial", 20))
+        return questiondisplay.config(text=f"{randHex()}", font=monospace)
     elif displaychoice == "Decimal":
-        return questiondisplay.config(text=f"{randDec()}", font=("Arial", 20))
+        return questiondisplay.config(text=f"{randDec()}", font=monospace)
 
 submit_button = tk.Button(baseNTab, text='Submit', command=print_answers)
 submit_button.pack()
+submit_button = tk.Button(baseNTab, text='Submit', command=print_answers, font=(40), height=4)
 
+we = tk.Label(baseNTab)
 #Binary Display
 questiondisplay = tk.Label(baseNTab)
-questiondisplay.pack()
+
+questiondisplay.grid(column=0,columnspan = 2, sticky = tk.W+tk.E, row=2)
+question_menu.grid(column=0, row=1, sticky = tk.W+tk.E)
+submit_button.grid(column=1, row=1, sticky = tk.W+tk.E)
+baseNTab.grid_columnconfigure((0, 1), weight=1)
 
 window.mainloop()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#graffiti - Riv

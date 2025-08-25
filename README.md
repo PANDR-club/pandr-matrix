@@ -12,4 +12,4 @@ This project aims to build an LED Matrix display-board for one of the classrooms
 - Benefit Mr Price's life as a teacher (should help him teach his lessons without getting in the way)
 - Spark curiosity and inspiration in his students (it should look cool)
 - Give everybody attending the club a chance to contribute
-- Meet all above requirements by the end of the 2024-2025 school year
+- Meet all above requirements by the end of the 2025-2026 school year

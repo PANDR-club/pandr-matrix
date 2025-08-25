@@ -26,6 +26,8 @@ notebook.add(mainTab, text='Home')
 notebook.add(baseNTab, text='BaseN')
 notebook.pack(expand=True, fill='both')
 
+matrixTools.dispClock() # For now just display the clock
+
 announcementVar=tk.StringVar()
 def submit():
     announcement=announcementVar.get()
@@ -33,7 +35,6 @@ def submit():
 
     screenPrev.config(text=announcement)
     announcementVar.set("")
-
 
 announcementEntry = tk.Entry(mainTab,
                              textvariable = announcementVar,
@@ -61,7 +62,7 @@ options_list = ["Binary", "Hexadecimal", "Decimal"]
 valueofchoice = tk.StringVar(baseNTab)
 valueofchoice.set("Select an Option")
 
-question_menu = tk.OptionMenu(baseNTab, valueofchoice, *options_list) 
+question_menu = tk.OptionMenu(baseNTab, valueofchoice, *options_list)
 question_menu.pack()
 
 def print_answers():
@@ -73,7 +74,7 @@ def print_answers():
     elif displaychoice == "Decimal":
         return questiondisplay.config(text=f"{randDec()}", font=("Arial", 20))
 
-submit_button = tk.Button(baseNTab, text='Submit', command=print_answers) 
+submit_button = tk.Button(baseNTab, text='Submit', command=print_answers)
 submit_button.pack()
 
 #Binary Display

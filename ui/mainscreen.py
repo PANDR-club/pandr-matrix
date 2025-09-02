@@ -3,12 +3,14 @@ from utils.bin_dec_hex_tools import randBin, randDec, randHex
 import tkinter as tk
 from tkinter import ttk
 import tkinter.font as tkFont
-
+import atexit
 
 
 def exitProg():
     matrixTools.quitMatrix()
     window.quit()
+
+atexit.register(exitProg)
 
 window = tk.Tk()
 window.title('Matrix Control Panel')
@@ -76,8 +78,6 @@ valueofchoice.set("Select an Option")
 monospace = tkFont.Font(family='Monospace', size=36)
 
 question_menu = tk.OptionMenu(baseNTab, valueofchoice, *options_list)
-question_menu.pack()
-question_menu = tk.OptionMenu(baseNTab, valueofchoice, *options_list)
 
 question_menu.config(height=4, font=(40))
 dropdown = window.nametowidget(question_menu.menuname)
@@ -92,8 +92,6 @@ def print_answers():
     elif displaychoice == "Decimal":
         return questiondisplay.config(text=f"{randDec()}", font=monospace)
 
-submit_button = tk.Button(baseNTab, text='Submit', command=print_answers)
-submit_button.pack()
 submit_button = tk.Button(baseNTab, text='Submit', command=print_answers, font=(40), height=4)
 
 we = tk.Label(baseNTab)

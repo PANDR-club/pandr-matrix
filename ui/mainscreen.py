@@ -3,16 +3,18 @@ from utils.bin_dec_hex_tools import randBin, randDec, randHex
 import tkinter as tk
 from tkinter import ttk
 import tkinter.font as tkFont
-
+import atexit
 
 
 def exitProg():
     matrixTools.quitMatrix()
     window.quit()
 
+atexit.register(exitProg)
+
 window = tk.Tk()
 window.title('Matrix Control Panel')
-window.minsize(width=1280, height=800) 
+window.minsize(width=1280, height=800)
 #window.attributes("-fullscreen", True) # Uncomment this for when running on the Pi
 
 notebook = ttk.Notebook(window) # Manages a collection of windows/displays
@@ -29,6 +31,8 @@ notebook.add(mainTab, text='Home')
 notebook.add(baseNTab, text='BaseN')
 notebook.pack(expand=True, fill='both')
 
+matrixTools.dispClock() # For now just display the clock
+
 announcementVar=tk.StringVar()
 def submit():
     announcement=announcementVar.get()
@@ -36,7 +40,6 @@ def submit():
 
     screenPrev.config(text=announcement)
     announcementVar.set("")
-
 
 announcementEntry = tk.Entry(mainTab,
                              textvariable = announcementVar,
@@ -74,7 +77,7 @@ valueofchoice.set("Select an Option")
 
 monospace = tkFont.Font(family='Monospace', size=36)
 
-question_menu = tk.OptionMenu(baseNTab, valueofchoice, *options_list) 
+question_menu = tk.OptionMenu(baseNTab, valueofchoice, *options_list)
 
 question_menu.config(height=4, font=(40))
 dropdown = window.nametowidget(question_menu.menuname)
@@ -89,7 +92,7 @@ def print_answers():
     elif displaychoice == "Decimal":
         return questiondisplay.config(text=f"{randDec()}", font=monospace)
 
-submit_button = tk.Button(baseNTab, text='Submit', command=print_answers, font=(40), height=4) 
+submit_button = tk.Button(baseNTab, text='Submit', command=print_answers, font=(40), height=4)
 
 we = tk.Label(baseNTab)
 #Binary Display

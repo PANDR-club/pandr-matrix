@@ -94,7 +94,6 @@ def print_answers():
 
 submit_button = tk.Button(baseNTab, text='Submit', command=print_answers, font=(40), height=4)
 
-we = tk.Label(baseNTab)
 #Binary Display
 questiondisplay = tk.Label(baseNTab)
 

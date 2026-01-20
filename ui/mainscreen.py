@@ -148,9 +148,10 @@ def deleteNames():
         for i in range(len(namesText)):
             listOfStudents.append(namesText[i].lower())
         listOfStudents.remove(f'{deletedName}' + '\n')
+        file.seek(0) # Moves pointer to start of file.
         file.truncate(0)
         newListOfStudents = ''.join(listOfStudents)
-        file.write(newListOfStudents) #weird bug with text on first item in list
+        file.write(newListOfStudents) 
 
 
 

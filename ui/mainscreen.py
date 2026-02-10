@@ -96,13 +96,15 @@ def print_answers():
         return questiondisplay.config(text=f"{randDec()}", font=monospace)
 
 submit_button = tk.Button(baseNTab, text='Submit', command=print_answers) 
-submit_button.pack()
+# submit_button.pack()
 #------
 
 #------ Class editor
 name_var = tk.StringVar(classTab)
 class_var = tk.StringVar(classTab)
 classOptions = os.listdir("Classes/")
+# if len(classOptions) == 0:
+#     open("placeholderClass.txt", "w")
 classChoice = tk.StringVar(classTab)
 classChoice.set("Choose a Class")
 if len(classOptions) != 0:
@@ -116,6 +118,8 @@ class_var = tk.StringVar(classTab)
 
 def addnametoaclass():
     name = name_var.get()
+    # if name == "":
+    #     return
     chosenclass = classChoice.get()
     with open(f'Classes//{chosenclass}.txt', 'a') as file:
         file.write(f'{name}\n')
@@ -192,11 +196,8 @@ namesDisplay.pack()
 #------------------
 #Fix bug - Nothing in 'Class Menu Folder' error when adding new class with no existing classes
 #Add error checking e.g empty box
-#Fix bug - Adding an empty name if clicking 'Add Name' with an empty box.
-
 
 questiondisplay = tk.Label(baseNTab)
-
 questiondisplay.grid(column=0,columnspan = 2, sticky = tk.W+tk.E, row=2)
 question_menu.grid(column=0, row=1, sticky = tk.W+tk.E)
 submit_button.grid(column=1, row=1, sticky = tk.W+tk.E)

@@ -1,4 +1,5 @@
 from matrix import utils
+import sys
 
 import threading
 
@@ -23,3 +24,4 @@ try:
 
 except KeyboardInterrupt:
     utils.clearScreen()
+    sys.exit()

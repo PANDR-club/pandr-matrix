@@ -89,9 +89,13 @@ def binToDec(binStr):
         comparisonNum /= 2
         if comparisonNum < 1:
             break
-    return total
+    return int(total)
 
-names = ['james', 'jack', 'john']
-def rand_name(names):
-    print(choice(names))
+def decToHex(dec):
+    return hexChars[dec//16]+hexChars[dec%16]
 
+def binToHex(binStr):
+    return decToHex(binToDec(binStr))
+
+def hexToDec(hexStr):
+    return binToDec(hexToBin(str(hexStr)))

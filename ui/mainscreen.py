@@ -100,36 +100,7 @@ submit_button = tk.Button(baseNTab, text='Submit', command=print_answers)
 #------
 
 #------ Class editor
-name_var = tk.StringVar(classTab)
-class_var = tk.StringVar(classTab)
-classOptions = os.listdir("Classes/")
-# if len(classOptions) == 0:
-#     open("placeholderClass.txt", "w")
-classChoice = tk.StringVar(classTab)
-classChoice.set("Choose a Class")
-if len(classOptions) != 0:
-    for i in range(len(classOptions)):
-        classOptions[i] = classOptions[i][:-4]
-    classMenu = tk.OptionMenu(classTab, classChoice, *classOptions)
-    classMenu.pack()
-    
-name_var = tk.StringVar(classTab)
-class_var = tk.StringVar(classTab)
-
-def addnametoaclass():
-    name = name_var.get()
-    # if name == "":
-    #     return
-    chosenclass = classChoice.get()
-    with open(f'Classes//{chosenclass}.txt', 'a') as file:
-        file.write(f'{name}\n')
-    name_var.set('')
-
-def addnewclass():
-    schoolclass = class_var.get()
-    newclass = open(f"Classes//{schoolclass}.txt", "x")
-    newclass.close()
-
+def reloadClassOptionMenu(classChoice, classMenu, classOptions, class_var):
     classChoice.set('Choose a Class')
     classMenu['menu'].delete(0, 'end')
     classOptions = os.listdir("Classes/")
@@ -141,19 +112,30 @@ def addnewclass():
         classMenu['menu'].add_command(label=classOption, command=tk._setit(classChoice, classOption))
     class_var.set('')
 
+def addnametoaclass():
+    name = name_var.get()
+    if name.strip() == "":
+        return
+    if classChoice.get() == "Choose a Class":
+        name_var.set('')
+        return
+    chosenclass = classChoice.get()
+    with open(f'Classes//{chosenclass}.txt', 'a') as file:
+        file.write(f'{name}\n')
+    name_var.set('')
+
+def addnewclass():
+    schoolclass = class_var.get()
+    if schoolclass.strip() == "":
+        return
+    newclass = open(f"Classes//{schoolclass}.txt", "x")
+    newclass.close()
+    reloadClassOptionMenu(classChoice, classMenu, classOptions, class_var)
+
 def deleteclass():
     classToDelete = classChoice.get()
     os.remove(f'Classes//{classToDelete}' + '.txt')
-
-    classChoice.set('Choose a Class')
-    classMenu['menu'].delete(0, 'end')
-    classOptions = os.listdir("Classes/")
-    if len(classOptions) != 0:
-        for i in range(len(classOptions)):
-            classOptions[i] = classOptions[i][:-4]
-
-    for classOption in classOptions:
-        classMenu['menu'].add_command(label=classOption, command=tk._setit(classChoice, classOption))
+    reloadClassOptionMenu(classChoice, classMenu, classOptions, class_var)
 
 def displayNames():
     displayStudentNames = classChoice.get()
@@ -162,20 +144,35 @@ def displayNames():
         namesDisplay.config(text=f'{namesText}', font=("Arial", 20))
 
 def deleteNames():
-    deletedName = str(name_var.get().lower())
+    deletedName = str(name_var.get().capitalize())
     deletedNamesClass = classChoice.get()
     with open(f'Classes//{deletedNamesClass}' + '.txt', 'r+') as file:
         namesText = file.readlines()
         listOfStudents = []
         for i in range(len(namesText)):
-            listOfStudents.append(namesText[i].lower())
+            listOfStudents.append(namesText[i].capitalize())
         listOfStudents.remove(f'{deletedName}' + '\n')
         file.seek(0) # Moves pointer to start of file.
         file.truncate(0)
         newListOfStudents = ''.join(listOfStudents)
         file.write(newListOfStudents) 
+    name_var.set('')
 
+name_var = tk.StringVar(classTab)
+class_var = tk.StringVar(classTab)
+open("Classes//placeholderClass.txt", "w")
+classOptions = os.listdir("Classes/")
+classChoice = tk.StringVar(classTab)
+classChoice.set("Choose a Class")
+for i in range(len(classOptions)):
+    classOptions[i] = classOptions[i][:-4]
+classMenu = tk.OptionMenu(classTab, classChoice, *classOptions)
+classMenu.pack()
+os.remove("Classes//placeholderClass.txt")
+reloadClassOptionMenu(classChoice, classMenu, classOptions, class_var)
 
+name_var = tk.StringVar(classTab)
+class_var = tk.StringVar(classTab)
 
 classInput = tk.Entry(classTab, textvariable=class_var)
 classInput.pack()
@@ -194,8 +191,6 @@ displayNames_button.pack()
 namesDisplay = tk.Label(classTab)
 namesDisplay.pack()
 #------------------
-#Fix bug - Nothing in 'Class Menu Folder' error when adding new class with no existing classes
-#Add error checking e.g empty box
 
 questiondisplay = tk.Label(baseNTab)
 questiondisplay.grid(column=0,columnspan = 2, sticky = tk.W+tk.E, row=2)

@@ -2,8 +2,7 @@ import tkinter as tk
 import os
 
 
-def build_class_tab(classTab):
-
+def buildClassTab(classTab):
     def reloadClassOptionMenu(classChoice, classMenu, classOptions, class_var):
         classChoice.set('Choose a Class')
         classMenu['menu'].delete(0, 'end')
@@ -18,7 +17,6 @@ def build_class_tab(classTab):
                 label=classOption,
                 command=tk._setit(classChoice, classOption)
             )
-
         class_var.set('')
 
     def addnametoaclass():
@@ -31,7 +29,6 @@ def build_class_tab(classTab):
             return
 
         chosenclass = classChoice.get()
-
         with open(f'Classes//{chosenclass}.txt', 'a') as file:
             file.write(f'{name}\n')
 

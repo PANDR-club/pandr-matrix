@@ -1,10 +1,7 @@
 import tkinter as tk
 
-
-def build_main_tab(mainTab, exitProg):
-
+def buildMainTab(mainTab, exitProg):
     announcementVar = tk.StringVar()
-
     def submit():
         announcement = announcementVar.get()
         screenPrev.config(text=announcement)

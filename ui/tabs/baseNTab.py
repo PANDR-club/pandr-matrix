@@ -3,8 +3,7 @@ import tkinter.font as tkFont
 from utils.bin_dec_hex_tools import randBin, randDec, randHex
 
 
-def build_basen_tab(baseNTab, window):
-
+def buildBaseNTab(baseNTab, window):
     options_list = ["Binary", "Hexadecimal", "Decimal"]
 
     basenchoice = tk.StringVar(baseNTab)
@@ -22,13 +21,11 @@ def build_basen_tab(baseNTab, window):
 
     def print_answers():
         displaychoice = basenchoice.get()
-
+    
         if displaychoice == "Binary":
             return questiondisplay.config(text=f"{randBin()}", font=monospace)
-
         elif displaychoice == "Hexadecimal":
             return questiondisplay.config(text=f"{randHex()}", font=monospace)
-
         elif displaychoice == "Decimal":
             return questiondisplay.config(text=f"{randDec()}", font=monospace)
 

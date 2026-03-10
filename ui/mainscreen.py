@@ -1,13 +1,14 @@
-from ui import matrixTools
+#from ui import matrixTools
 from utils.bin_dec_hex_tools import randBin, randDec, randHex
 import tkinter as tk
 from tkinter import ttk
+import os
 import tkinter.font as tkFont
 import atexit
 
 
 def exitProg():
-    matrixTools.quitMatrix()
+#    matrixTools.quitMatrix()
     window.quit()
 
 atexit.register(exitProg)
@@ -26,12 +27,14 @@ style.configure("TNotebook.Tab", padding=[10, 20])
 
 mainTab = tk.Frame(notebook)
 baseNTab = tk.Frame(notebook)
+classTab = tk.Frame(notebook)
 
 notebook.add(mainTab, text='Home')
 notebook.add(baseNTab, text='BaseN')
+notebook.add(classTab, text='Class')
 notebook.pack(expand=True, fill='both')
 
-matrixTools.dispClock() # For now just display the clock
+# matrixTools.dispClock() # For now just display the clock
 
 announcementVar=tk.StringVar()
 def submit():
@@ -71,20 +74,20 @@ exitBtn = tk.Button(mainTab,
                     height=2)
 exitBtn.pack(side="bottom")
 
+#----- Hex, Dec, Bin generator
 options_list = ["Binary", "Hexadecimal", "Decimal"]
-valueofchoice = tk.StringVar(baseNTab)
-valueofchoice.set("Select an Option")
+basenchoice = tk.StringVar(baseNTab)
+basenchoice.set("Select an Option")
 
 monospace = tkFont.Font(family='Monospace', size=36)
-
-question_menu = tk.OptionMenu(baseNTab, valueofchoice, *options_list)
+question_menu = tk.OptionMenu(baseNTab, basenchoice, *options_list)
 
 question_menu.config(height=4, font=(40))
 dropdown = window.nametowidget(question_menu.menuname)
 dropdown.config(font=monospace)
 
 def print_answers():
-    displaychoice = valueofchoice.get()
+    displaychoice = basenchoice.get()
     if displaychoice == "Binary":
         return questiondisplay.config(text=f"{randBin()}", font=monospace)
     elif displaychoice == "Hexadecimal":
@@ -92,11 +95,104 @@ def print_answers():
     elif displaychoice == "Decimal":
         return questiondisplay.config(text=f"{randDec()}", font=monospace)
 
-submit_button = tk.Button(baseNTab, text='Submit', command=print_answers, font=(40), height=4)
+submit_button = tk.Button(baseNTab, text='Submit', command=print_answers) 
+# submit_button.pack()
+#------
 
-#Binary Display
+#------ Class editor
+def reloadClassOptionMenu(classChoice, classMenu, classOptions, class_var):
+    classChoice.set('Choose a Class')
+    classMenu['menu'].delete(0, 'end')
+    classOptions = os.listdir("Classes/")
+    if len(classOptions) != 0:
+        for i in range(len(classOptions)):
+            classOptions[i] = classOptions[i][:-4]
+
+    for classOption in classOptions:
+        classMenu['menu'].add_command(label=classOption, command=tk._setit(classChoice, classOption))
+    class_var.set('')
+
+def addnametoaclass():
+    name = name_var.get()
+    if name.strip() == "":
+        return
+    if classChoice.get() == "Choose a Class":
+        name_var.set('')
+        return
+    chosenclass = classChoice.get()
+    with open(f'Classes//{chosenclass}.txt', 'a') as file:
+        file.write(f'{name}\n')
+    name_var.set('')
+
+def addnewclass():
+    schoolclass = class_var.get()
+    if schoolclass.strip() == "":
+        return
+    newclass = open(f"Classes//{schoolclass}.txt", "x")
+    newclass.close()
+    reloadClassOptionMenu(classChoice, classMenu, classOptions, class_var)
+
+def deleteclass():
+    classToDelete = classChoice.get()
+    os.remove(f'Classes//{classToDelete}' + '.txt')
+    reloadClassOptionMenu(classChoice, classMenu, classOptions, class_var)
+
+def displayNames():
+    displayStudentNames = classChoice.get()
+    with open(f'Classes//{displayStudentNames}' + '.txt') as file:
+        namesText = file.read()
+        namesDisplay.config(text=f'{namesText}', font=("Arial", 20))
+
+def deleteNames():
+    deletedName = str(name_var.get().capitalize())
+    deletedNamesClass = classChoice.get()
+    with open(f'Classes//{deletedNamesClass}' + '.txt', 'r+') as file:
+        namesText = file.readlines()
+        listOfStudents = []
+        for i in range(len(namesText)):
+            listOfStudents.append(namesText[i].capitalize())
+        listOfStudents.remove(f'{deletedName}' + '\n')
+        file.seek(0) # Moves pointer to start of file.
+        file.truncate(0)
+        newListOfStudents = ''.join(listOfStudents)
+        file.write(newListOfStudents) 
+    name_var.set('')
+
+name_var = tk.StringVar(classTab)
+class_var = tk.StringVar(classTab)
+open("Classes//placeholderClass.txt", "w")
+classOptions = os.listdir("Classes/")
+classChoice = tk.StringVar(classTab)
+classChoice.set("Choose a Class")
+for i in range(len(classOptions)):
+    classOptions[i] = classOptions[i][:-4]
+classMenu = tk.OptionMenu(classTab, classChoice, *classOptions)
+classMenu.pack()
+os.remove("Classes//placeholderClass.txt")
+reloadClassOptionMenu(classChoice, classMenu, classOptions, class_var)
+
+name_var = tk.StringVar(classTab)
+class_var = tk.StringVar(classTab)
+
+classInput = tk.Entry(classTab, textvariable=class_var)
+classInput.pack()
+addClass_button = tk.Button(classTab, text='Add Class', command=addnewclass)
+addClass_button.pack()
+deleteClass_button = tk.Button(classTab, text='Delete Class', command=deleteclass)
+deleteClass_button.pack()
+nameInput = tk.Entry(classTab, textvariable=name_var)
+nameInput.pack()
+addName_button = tk.Button(classTab, text='Add Name', command=addnametoaclass)
+addName_button.pack()
+deleteName_button = tk.Button(classTab, text='Delete Name', command=deleteNames)
+deleteName_button.pack()
+displayNames_button = tk.Button(classTab, text='Display Names', command=displayNames)
+displayNames_button.pack()
+namesDisplay = tk.Label(classTab)
+namesDisplay.pack()
+#------------------
+
 questiondisplay = tk.Label(baseNTab)
-
 questiondisplay.grid(column=0,columnspan = 2, sticky = tk.W+tk.E, row=2)
 question_menu.grid(column=0, row=1, sticky = tk.W+tk.E)
 submit_button.grid(column=1, row=1, sticky = tk.W+tk.E)

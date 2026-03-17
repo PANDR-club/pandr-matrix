@@ -99,3 +99,7 @@ def binToHex(binStr):
 
 def hexToDec(hexStr):
     return binToDec(hexToBin(str(hexStr)))
+
+
+def leftbin(binStr):
+    return binStr + '0'

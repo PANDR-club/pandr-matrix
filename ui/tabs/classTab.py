@@ -2,7 +2,7 @@ import tkinter as tk
 import os
 
 
-def buildTab(classTab):
+def buildClassTab(classTab):
     def menuReload(classChoice, classMenu, classOptions, classVar):
         classChoice.set('Choose a Class')
         classMenu['menu'].delete(0, 'end')

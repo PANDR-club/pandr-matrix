@@ -2,8 +2,8 @@ import tkinter as tk
 import os
 
 
-def buildClassTab(classTab):
-    def reloadClassOptionMenu(classChoice, classMenu, classOptions, class_var):
+def buildTab(classTab):
+    def menuReload(classChoice, classMenu, classOptions, classVar):
         classChoice.set('Choose a Class')
         classMenu['menu'].delete(0, 'end')
 
@@ -17,71 +17,71 @@ def buildClassTab(classTab):
                 label=classOption,
                 command=tk._setit(classChoice, classOption)
             )
-        class_var.set('')
+        classVar.set('')
 
-    def addnametoaclass():
-        name = name_var.get()
+    def addName():
+        name = nameVar.get()
         if name.strip() == "":
             return
 
         if classChoice.get() == "Choose a Class":
-            name_var.set('')
+            nameVar.set('')
             return
 
-        chosenclass = classChoice.get()
-        with open(f'Classes//{chosenclass}.txt', 'a') as file:
+        classChoice = classChoice.get()
+        with open(f'Classes//{classChoice}.txt', 'a') as file:
             file.write(f'{name}\n')
 
-        name_var.set('')
+        nameVar.set('')
 
-    def addnewclass():
-        schoolclass = class_var.get()
-        if schoolclass.strip() == "":
+    def addClass():
+        addedClass = classVar.get()
+        if addedClass.strip() == "":
             return
 
-        newclass = open(f"Classes//{schoolclass}.txt", "x")
+        newclass = open(f"Classes//{addedClass}.txt", "x")
         newclass.close()
 
-        reloadClassOptionMenu(classChoice, classMenu, classOptions, class_var)
+        menuReload(classChoice, classMenu, classOptions, classVar)
 
-    def deleteclass():
-        classToDelete = classChoice.get()
-        os.remove(f'Classes//{classToDelete}.txt')
+    def deleteClass():
+        deletedClass = classChoice.get()
+        os.remove(f'Classes//{deletedClass}.txt')
 
-        reloadClassOptionMenu(classChoice, classMenu, classOptions, class_var)
+        menuReload(classChoice, classMenu, classOptions, classVar)
 
     def displayNames():
-        displayStudentNames = classChoice.get()
+        displayClass = classChoice.get()
 
-        with open(f'Classes//{displayStudentNames}.txt') as file:
+        with open(f'Classes//{displayClass}.txt') as file:
             namesText = file.read()
 
         namesDisplay.config(text=f'{namesText}', font=("Arial", 20))
 
     def deleteNames():
-        deletedName = str(name_var.get().capitalize())
-        deletedNamesClass = classChoice.get()
+        deletedName = str(nameVar.get().capitalize())
+        nameLocation = classChoice.get()
 
-        with open(f'Classes//{deletedNamesClass}.txt', 'r+') as file:
+        with open(f'Classes//{nameLocation}.txt', 'r+') as file:
             namesText = file.readlines()
 
-            listOfStudents = []
+            studentList = []
 
             for i in range(len(namesText)):
-                listOfStudents.append(namesText[i].capitalize())
+                studentList.append(namesText[i].capitalize())
 
-            listOfStudents.remove(f'{deletedName}\n')
+            studentList.remove(f'{deletedName}\n')
 
             file.seek(0)
             file.truncate(0)
 
-            newListOfStudents = ''.join(listOfStudents)
-            file.write(newListOfStudents)
+            newStudentList = ''.join(studentList)
+            file.write(newStudentList)
 
-        name_var.set('')
+        nameVar.set('')
 
-    name_var = tk.StringVar(classTab)
-    class_var = tk.StringVar(classTab)
+    nameVar = tk.StringVar(classTab)
+    classVar = tk.StringVar(classTab)
 
     open("Classes//placeholderClass.txt", "w")
 
@@ -97,21 +97,21 @@ def buildClassTab(classTab):
 
     os.remove("Classes//placeholderClass.txt")
 
-    reloadClassOptionMenu(classChoice, classMenu, classOptions, class_var)
+    menuReload(classChoice, classMenu, classOptions, classVar)
 
-    classInput = tk.Entry(classTab, textvariable=class_var)
+    classInput = tk.Entry(classTab, textvariable=classVar)
     classInput.pack()
 
-    addClass_button = tk.Button(classTab, text='Add Class', command=addnewclass)
+    addClass_button = tk.Button(classTab, text='Add Class', command=addClass)
     addClass_button.pack()
 
-    deleteClass_button = tk.Button(classTab, text='Delete Class', command=deleteclass)
+    deleteClass_button = tk.Button(classTab, text='Delete Class', command=deleteClass)
     deleteClass_button.pack()
 
-    nameInput = tk.Entry(classTab, textvariable=name_var)
+    nameInput = tk.Entry(classTab, textvariable=nameVar)
     nameInput.pack()
 
-    addName_button = tk.Button(classTab, text='Add Name', command=addnametoaclass)
+    addName_button = tk.Button(classTab, text='Add Name', command=addName)
     addName_button.pack()
 
     deleteName_button = tk.Button(classTab, text='Delete Name', command=deleteNames)

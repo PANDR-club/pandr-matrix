@@ -102,7 +102,8 @@ def hexToDec(hexStr):
 
 
 def leftbin(binStr):
-    return binStr[1:] + '0'
+    return binStr + "0"
 
-def rightbin(binStr)
-    return  '0' + binStr[:-1] 
+def rightbin(binStr):
+    return binStr[:-1]
+

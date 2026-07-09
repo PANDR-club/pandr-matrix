@@ -1,4 +1,17 @@
 #!/usr/bin/env bash
+# Incomplete Script
+# still in progress
+
+#---WHAT THIS SCRIPT DOES---#
+#This script is an automated setup utility that prepares your Raspberry Pi to run an RGB LED Matrix. 
+#It forces strict error checking, automatically installs required system and Python dependencies, 
+#locates and compiles the necessary hardware-level C++ drivers into Python modules,
+#and permanently disables the Pi's onboard audio system to prevent sound card signals from causing the LED display to flicker.
+#---------------------------#
+
+#=========TO DO=========#
+currently this script only validates and installs dependancies , add commands to run the actual python files needed to start the program and the matrix
+#=======================#
 
 set -euo pipefail
 
@@ -116,3 +129,7 @@ main() {
 }
 
 main "$@"
+#example
+# 1. Force the script to jump to the directory where this .sh file lives
+cd "$(dirname "$0")" || exit 1
+####python3 PROGRAM_PYTHON_FILE_HERE

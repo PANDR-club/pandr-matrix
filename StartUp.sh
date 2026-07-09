@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Incomplete Script
 # still in progress
+### Code By CBA ###
 
 #---WHAT THIS SCRIPT DOES---#
 #This script is an automated setup utility that prepares your Raspberry Pi to run an RGB LED Matrix. 

@@ -4,6 +4,8 @@ import time
 
 from PIL import Image
 import string # Added By CBA
+from datetime import datetime # Added by CBA
+import zoneinfo # Added by CBA
 # Clears matrix
 def clearScreen():
     initialise.rgbMatrix.Clear()
@@ -17,8 +19,12 @@ def dispText(text, posx, posy, colour, font=consts.smallFont):
 def displayCurrentTime():
     currentText = ''
     text_color = consts.GREEN
-
-    currentText = time.strftime("%H:%M:%S", time.gmtime())
+	# Pulls the exact local timezone configuration from the OS
+	local_tz = zoneinfo.ZoneInfo("localtime") 
+	
+	# Fetch the time using that specific timezone
+	now = datetime.now(local_tz)
+    currentText = now.strftime("%H:%M:%S")
     dispText(currentText, 64-len(currentText)*5, 32+6, text_color, font=consts.largeFont)
 
 def dispLogo():

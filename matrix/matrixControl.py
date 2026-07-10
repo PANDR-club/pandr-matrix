@@ -18,6 +18,8 @@ try:
 	while True:
 		if mode == 'clock':
 			utils.displayCurrentTime()
+		elif mode == 'screensaver':
+			utils.screenSaver()
 		elif 'disptext' in mode:
 			localText = mode.removeprefix('disptext ')
 			 # if localText.startswith()
